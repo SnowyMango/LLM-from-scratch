@@ -1,0 +1,68 @@
+C intermediate notes
+
+Pointers
+A pointer stores the memory address of a value. The & operator gets an address, and * reads or writes the value at an address.
+
+    int x = 10;
+    int *p = &x;
+    *p = 20;          // x is now 20
+    printf("%d\n", x);
+
+Arrays and pointer arithmetic
+An array name acts like a pointer to its first element. Adding 1 to a pointer moves it to the next element of its type.
+
+    int nums[3] = {10, 20, 30};
+    int *q = nums;
+    printf("%d\n", *(q + 1));   // 20
+    printf("%d\n", q[2]);       // 30
+
+Strings
+C strings are arrays of char that end with a null character '\0'. Functions like strlen and strcpy depend on that terminator, so forgetting it causes errors.
+
+    char greeting[] = "hello";   // stores 6 characters, including '\0'
+
+Dynamic memory
+malloc requests memory at runtime and free returns it. Every malloc needs a matching free, or the program leaks memory.
+
+    int *values = malloc(10 * sizeof(int));
+    if (values == NULL) {
+        return 1;               // allocation failed
+    }
+    values[0] = 42;
+    free(values);
+    values = NULL;              // avoid using a dangling pointer
+
+Structs
+A struct groups related values under one name.
+
+    typedef struct {
+        char name[50];
+        int age;
+    } Person;
+
+    Person p = {"Ada", 36};
+    printf("%s is %d\n", p.name, p.age);
+
+Header files and compilation
+A header file (.h) declares functions and types. A source file (.c) defines them. #include brings declarations into other files. Use include guards so a header is not included twice.
+
+    #ifndef UTILS_H
+    #define UTILS_H
+    int add(int a, int b);
+    #endif
+
+Function pointers
+A function pointer stores the address of a function, so you can pass behavior as an argument.
+
+    int compare(const void *a, const void *b) {
+        return *(const int *)a - *(const int *)b;
+    }
+    qsort(nums, 3, sizeof(int), compare);
+
+Undefined behavior
+Some mistakes don't stop the program but make its behavior unpredictable. Examples include reading past the end of an array, using a pointer after free, and signed integer overflow. Compilers with warnings turned on (-Wall -Wextra) catch many of these.
+
+Common pitfalls
+Writing past the end of an array or buffer is a buffer overflow, which is a common security bug. Use functions that take a size, such as snprintf instead of sprintf.
+Using = instead of == in a condition assigns instead of comparing.
+Scanf with %s does not check the buffer size, so use a width such as %99s.

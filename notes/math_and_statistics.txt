@@ -1,0 +1,43 @@
+Math and statistics for machine learning
+
+Vectors and dot products
+A vector is an ordered list of numbers. The dot product of two vectors multiplies matching entries and adds the results: a dot b = a1*b1 + a2*b2 + ... + an*bn. It measures how much two vectors point in the same direction.
+
+Matrices and matrix multiplication
+A matrix is a grid of numbers with rows and columns. Multiplying a matrix of shape (m, n) by a matrix of shape (n, p) gives a result of shape (m, p). The inner dimensions must match. Neural network layers are matrix multiplications followed by an activation function.
+
+Derivatives
+A derivative measures how fast a function changes. The derivative of x^2 is 2x. At x = 3, the function is rising at a rate of 6. A partial derivative measures change with respect to one variable while holding the others fixed.
+
+Gradients and gradient descent
+The gradient is the vector of all partial derivatives. It points in the direction in which the function increases fastest. Gradient descent moves the parameters the opposite way, so the loss goes down. The learning rate sets how big each step is.
+
+The chain rule
+The chain rule gives the derivative of a function built from other functions. If y = f(g(x)), then dy/dx = f'(g(x)) * g'(x). Backpropagation applies the chain rule layer by layer, starting from the loss and moving backward through the network.
+
+Probability basics
+A probability is a number from 0 to 1. The probabilities of all possible outcomes add up to 1. Conditional probability P(A given B) = P(A and B) / P(B). Bayes' theorem rearranges this: P(A given B) = P(B given A) * P(A) / P(B).
+
+Mean, variance, and standard deviation
+The mean is the average. The median is the middle value when data is sorted. Variance is the average of the squared differences from the mean. The standard deviation is the square root of the variance, and it is in the same units as the data.
+
+The normal distribution
+The normal distribution is a symmetric bell curve described by a mean and a standard deviation. About 68 percent of values fall within one standard deviation of the mean, and about 95 percent fall within two.
+
+Softmax
+Softmax turns a list of scores into probabilities. Each score is exponentiated and divided by the sum of all the exponentiated scores, so the results are positive and add up to 1. Language models use softmax to choose the next token.
+
+Cross-entropy loss
+Cross-entropy measures how much probability a model gives to the correct answer. For one example, the loss is -log(p), where p is the probability of the correct class. A confident correct prediction gives a loss near 0. A model that guesses uniformly over V possible characters has a loss of about ln(V).
+
+Perplexity
+Perplexity is the exponential of the cross-entropy loss. It can be read as the average number of choices the model is effectively unsure between. Lower perplexity is better.
+
+Training, validation, and test sets
+The training set is used to fit the model. The validation set is used to tune settings and to detect overfitting. The test set is used once, at the end, to report final performance. Using the test set repeatedly for decisions makes the reported result too optimistic.
+
+Accuracy, precision, and recall
+For a yes or no classifier, precision is the share of predicted positives that are correct: TP / (TP + FP). Recall is the share of actual positives that are found: TP / (TP + FN). Accuracy is the share of all predictions that are correct. When classes are imbalanced, accuracy can look good even when the model is poor.
+
+Correlation and causation
+Correlation measures how strongly two variables move together in a straight-line pattern, from -1 to 1. Correlation does not prove that one variable causes the other. A hidden third factor can produce a correlation between two unrelated variables.

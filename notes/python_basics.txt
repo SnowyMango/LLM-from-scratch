@@ -1,0 +1,96 @@
+Python basics
+
+Variables and types
+A variable is a name that points to a value. Python figures out the type automatically.
+Common types are int, float, str, bool, list, dict, tuple, and set.
+
+    age = 21
+    price = 9.99
+    name = "Ada"
+    is_student = True
+
+Strings can be combined with f-strings.
+
+    message = f"{name} is {age} years old"
+
+Lists and dictionaries
+A list is an ordered, changeable collection. Indexing starts at 0.
+
+    fruits = ["apple", "banana", "cherry"]
+    fruits.append("date")
+    print(fruits[0])      # apple
+    print(fruits[-1])     # date
+
+A dictionary stores key-value pairs.
+
+    student = {"name": "Ada", "grade": 90}
+    print(student["name"])
+    student["grade"] = 95
+
+Loops
+A for loop goes through each item in a sequence. A while loop repeats while a condition is true.
+
+    for fruit in fruits:
+        print(fruit)
+
+    count = 0
+    while count < 3:
+        print(count)
+        count += 1
+
+List comprehensions build a new list in one line.
+
+    squares = [x * x for x in range(10)]
+    evens = [x for x in range(20) if x % 2 == 0]
+
+Functions
+A function groups code you want to reuse. Use def to define one and return to send back a result.
+
+    def add(a, b):
+        return a + b
+
+    total = add(3, 4)   # 7
+
+Default arguments and keyword arguments make functions easier to call.
+
+    def greet(name, greeting="Hello"):
+        return f"{greeting}, {name}!"
+
+    print(greet("Ada"))
+    print(greet("Ada", greeting="Hi"))
+
+Classes
+A class is a blueprint for objects. The __init__ method runs when you create an object, and self refers to the object itself.
+
+    class Dog:
+        def __init__(self, name, age):
+            self.name = name
+            self.age = age
+
+        def bark(self):
+            return f"{self.name} says woof"
+
+    rex = Dog("Rex", 3)
+    print(rex.bark())
+
+Errors and exceptions
+Use try and except to handle errors without the program crashing.
+
+    try:
+        number = int("abc")
+    except ValueError:
+        print("That is not a number")
+    finally:
+        print("This always runs")
+
+Modules and imports
+A module is a Python file that you can import. The standard library is a large set of built-in modules.
+
+    import math
+    print(math.sqrt(16))   # 4.0
+
+Common mistakes
+Forgetting the colon after def, if, for, or while causes a SyntaxError.
+Indentation matters. Code inside a block must be indented the same amount.
+Mutable default arguments such as def f(items=[]) can cause surprising behavior. Use None as the default instead.
+Using = when you mean == compares nothing. Use == to compare values.

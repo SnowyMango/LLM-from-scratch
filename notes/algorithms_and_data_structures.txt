@@ -1,0 +1,67 @@
+Algorithms and data structures
+
+Big-O notation
+Big-O describes how running time or memory grows as the input size n grows. It ignores constant factors and focuses on the trend.
+- O(1): constant time, such as looking up a list item by index.
+- O(log n): the work halves each step, as in binary search.
+- O(n): one pass through the data, such as a linear search.
+- O(n log n): typical of efficient sorting, such as merge sort.
+- O(n^2): nested loops over the data, such as bubble sort.
+- O(2^n): exponential growth, such as a naive recursive Fibonacci.
+
+Arrays and lists
+Reading by index takes O(1). Inserting or deleting in the middle takes O(n) because later items must shift.
+
+Linked lists
+Each node stores a value and a pointer to the next node. Inserting after a known node is O(1), but reaching the k-th item takes O(k).
+
+Stacks and queues
+A stack is last in, first out. It is used for function calls, undo history, and checking matched brackets.
+A queue is first in, first out. It is used for task scheduling and breadth-first search.
+
+Hash tables
+A hash table maps keys to values using a hash function. Average lookup, insert, and delete are O(1). Collisions, where two keys land in the same slot, are handled by chaining or open addressing. In the worst case, all keys collide and operations become O(n). Python's dict and set are hash tables.
+
+Binary search trees
+Each node has at most two children. Smaller values go left and larger values go right. Search is O(log n) when the tree is balanced and O(n) when it degenerates into a line. Self-balancing trees such as AVL and red-black trees keep the height logarithmic.
+
+Heaps and priority queues
+A min-heap always keeps the smallest item at the top. Insert and remove are O(log n). Heaps are used for priority queues and for Dijkstra's algorithm. Python provides them in the heapq module.
+
+Binary search
+Binary search works only on sorted data. It checks the middle item and discards half of the remaining range each time.
+
+    def binary_search(items, target):
+        lo, hi = 0, len(items) - 1
+        while lo <= hi:
+            mid = (lo + hi) // 2
+            if items[mid] == target:
+                return mid
+            if items[mid] < target:
+                lo = mid + 1
+            else:
+                hi = mid - 1
+        return -1
+
+Sorting
+Merge sort splits the list in half, sorts each half, and merges them. It runs in O(n log n) in every case and is stable, meaning equal items keep their original order. It needs O(n) extra memory. Quicksort is usually fast in practice and works in place, but its worst case is O(n^2). Python's built-in sorted() uses Timsort, which combines ideas from merge sort and insertion sort.
+
+Recursion
+A recursive function calls itself on a smaller input. Every recursive function needs a base case that stops the calls.
+
+Graphs
+A graph is a set of vertices connected by edges. Breadth-first search uses a queue and finds the shortest path when every edge has the same cost. Depth-first search uses a stack, or recursion, and explores as far as possible before backtracking. Dijkstra's algorithm finds shortest paths when edge weights are non-negative. It uses a heap and runs in O((V + E) log V).
+
+Dynamic programming
+Dynamic programming solves a problem by breaking it into overlapping subproblems and storing their answers. Memoization is one way to do this. The example below avoids the exponential cost of naive Fibonacci.
+
+    from functools import lru_cache
+
+    @lru_cache(maxsize=None)
+    def fib(n):
+        if n < 2:
+            return n
+        return fib(n - 1) + fib(n - 2)
+
+Trade-offs
+Most design choices trade time for memory. Choose a data structure by the operations you need most often. If you search by key constantly, use a hash table. If you need the smallest item repeatedly, use a heap. If the data must stay ordered, use a tree or keep a sorted list.

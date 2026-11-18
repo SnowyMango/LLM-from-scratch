@@ -1,0 +1,73 @@
+JavaScript intermediate notes
+
+Variables and scope
+Use const by default and let when a value must change. var is function-scoped and has quirks, so avoid it in new code.
+
+    const name = "Ada";
+    let count = 0;
+    count += 1;
+
+Equality and truthiness
+Always use === and !== for comparisons. == converts types first, which causes surprises.
+Falsy values are false, 0, "", null, undefined, NaN. Everything else is truthy.
+
+    console.log(0 == "");    // true
+    console.log(0 === "");   // false
+
+Functions and closures
+A closure is a function that remembers the variables from the scope where it was created.
+
+    function makeCounter() {
+      let count = 0;
+      return () => ++count;
+    }
+    const next = makeCounter();
+    console.log(next(), next());   // 1 2
+
+Arrow functions do not have their own this. They use the this of the surrounding code.
+
+Arrays and array methods
+map transforms each item, filter keeps items that pass a test, and reduce combines items into one value.
+
+    const nums = [1, 2, 3, 4];
+    const doubled = nums.map(n => n * 2);
+    const evens = nums.filter(n => n % 2 === 0);
+    const total = nums.reduce((sum, n) => sum + n, 0);
+
+Destructuring and spread
+    const { name, age = 18 } = person;
+    const [first, ...rest] = list;
+    const merged = { ...defaults, ...overrides };
+
+Asynchronous code
+Promises represent a value that will arrive later. async and await let you write asynchronous code that reads like normal code.
+
+    async function loadUser(id) {
+      try {
+        const res = await fetch(`/api/users/${id}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return await res.json();
+      } catch (err) {
+        console.error("Failed to load user:", err);
+      }
+    }
+
+The event loop
+JavaScript runs one task at a time on a single thread. Asynchronous callbacks, promises, and timers wait in queues. Promise callbacks run before timer callbacks once the current code finishes.
+
+Classes and this
+Classes are syntax over prototypes. The value of this depends on how a function is called. Passing a method as a callback can lose its this, so bind it or use an arrow function.
+
+Modules
+Use export and import in modern code.
+
+    // math.js
+    export function add(a, b) { return a + b; }
+
+    // main.js
+    import { add } from "./math.js";
+
+Common pitfalls
+Forgetting await on a promise leaves you holding a pending promise instead of the value.
+Floating point math is imprecise: 0.1 + 0.2 is not exactly 0.3.
+Mutating an array or object that other code shares can cause bugs that are hard to trace. Prefer creating new values with map, filter, and spread.

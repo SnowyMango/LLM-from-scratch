@@ -1,0 +1,61 @@
+Databases, SQL, and Git
+
+SQL queries
+A SQL query reads data from tables. The main clauses appear in this order:
+SELECT chooses the columns, FROM names the table, WHERE filters rows, GROUP BY combines rows, HAVING filters groups, ORDER BY sorts the result, and LIMIT caps the number of rows.
+
+    SELECT name, COUNT(*) AS num_orders
+    FROM customers
+    JOIN orders ON customers.id = orders.customer_id
+    GROUP BY name
+    HAVING COUNT(*) > 2
+    ORDER BY num_orders DESC
+    LIMIT 10;
+
+Joins
+An INNER JOIN returns only rows that match in both tables. A LEFT JOIN returns every row from the left table and fills in NULL where there is no match on the right.
+
+Keys
+A primary key uniquely identifies each row in a table. A foreign key holds the primary key of a row in another table, and it links the two tables together.
+
+Normalization
+Normalization organizes tables so each fact is stored in one place. This avoids duplicate data and the inconsistencies it causes. Splitting a customer's address into its own table, referenced by a key, is one example.
+
+Indexes
+An index is a separate structure that lets the database find rows on a column quickly, similar to the index at the back of a book. Indexes speed up reads but take extra storage, and they make writes a bit slower because the index must be updated too.
+
+Transactions and ACID
+A transaction groups several statements so they all succeed or none of them take effect. ACID describes the guarantees: atomicity (all or nothing), consistency (rules stay satisfied), isolation (concurrent transactions do not interfere in confusing ways), and durability (committed data survives a crash).
+
+Git basics
+Git records snapshots of a project over time. Each snapshot is called a commit and has a message describing the change.
+
+    git init                      # start tracking a folder
+    git status                    # see what changed
+    git add main.py               # stage a file for the next commit
+    git commit -m "Add training loop"
+    git log --oneline             # view history
+
+Branches
+A branch is a movable pointer to a commit. It lets you work on a feature without changing the main line of work.
+
+    git switch -c add-generation  # create and switch to a new branch
+    git switch main               # switch back
+    git merge add-generation      # bring the branch's changes into main
+
+Remotes
+A remote is a copy of the repository on another machine, such as GitHub. git pull downloads and merges changes from the remote. git push uploads your commits to it.
+
+Merge conflicts
+A conflict happens when two branches change the same lines differently. Git marks the conflicting part of the file like this:
+
+    <<<<<<< HEAD
+    your version
+    =======
+    the other version
+    >>>>>>> feature-branch
+
+Edit the file to keep the correct code, remove the markers, then run git add and git commit.
+
+.gitignore
+A .gitignore file lists files Git should never track, such as virtual environments, cache folders, and large model files. For this project, it should include .venv/ and *.pt.

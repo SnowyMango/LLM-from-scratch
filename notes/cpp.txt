@@ -1,0 +1,65 @@
+C++ intermediate notes
+
+References
+A reference is another name for an existing variable. Use const references to pass large objects without copying them and without allowing changes.
+
+    void printAll(const std::vector<int>& items) {
+        for (int x : items) std::cout << x << " ";
+    }
+
+RAII
+Resource Acquisition Is Initialization means a resource is acquired in a constructor and released in a destructor. When the object goes out of scope, the destructor runs, so the resource is freed even if an error occurs.
+
+Smart pointers
+Smart pointers manage heap memory automatically. unique_ptr has one owner. shared_ptr allows several owners and counts references.
+
+    #include <memory>
+
+    auto box = std::make_unique<int>(42);
+    auto shared = std::make_shared<std::string>("hello");
+
+Prefer make_unique and make_shared over raw new and delete.
+
+The standard library
+vector is a resizable array and is the default container. map stores sorted key-value pairs. unordered_map uses hashing for faster average lookups. Algorithms such as std::sort and std::find work on iterators.
+
+    std::vector<int> nums = {5, 2, 8};
+    std::sort(nums.begin(), nums.end());
+
+    std::map<std::string, int> ages;
+    ages["Ada"] = 36;
+
+Templates
+Templates write code once for many types. The compiler creates a version for each type you use.
+
+    template <typename T>
+    T maxOf(T a, T b) {
+        return (a > b) ? a : b;
+    }
+
+Lambdas and auto
+A lambda is an unnamed function you can write inline. auto lets the compiler deduce a type.
+
+    auto square = [](int x) { return x * x; };
+    std::vector<int> sq;
+    for (auto n : {1, 2, 3}) sq.push_back(square(n));
+
+Move semantics
+A move transfers the contents of an object instead of copying them. Use std::move when you are finished with an object and want to hand its resources to another.
+
+Virtual functions and polymorphism
+A virtual function can be overridden in a derived class. Calling it through a base-class pointer or reference runs the derived version. Give base classes with virtual functions a virtual destructor.
+
+    class Animal {
+    public:
+        virtual ~Animal() = default;
+        virtual std::string sound() const = 0;   // pure virtual
+    };
+
+Const correctness
+Mark functions that don't change the object as const. The compiler then prevents accidental changes and helps you reason about the code.
+
+Common pitfalls
+Returning a reference or pointer to a local variable leaves you with a dangling reference.
+Iterators can be invalidated when a vector grows, so don't keep them after changing the container.
+Forgetting a virtual destructor in a base class can cause resources in derived classes to leak.

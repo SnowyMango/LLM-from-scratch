@@ -1,0 +1,74 @@
+Java intermediate notes
+
+Classes, objects, and access
+A class is a blueprint and an object is an instance of it. Use private for fields and expose them through methods when needed.
+
+    public class Account {
+        private double balance;
+
+        public Account(double initial) {
+            this.balance = initial;
+        }
+
+        public double getBalance() {
+            return balance;
+        }
+    }
+
+Inheritance and interfaces
+A class extends one class and implements many interfaces. An interface lists method signatures that implementing classes must provide.
+
+    interface Shape {
+        double area();
+    }
+
+    class Circle implements Shape {
+        private final double r;
+        Circle(double r) { this.r = r; }
+        public double area() { return Math.PI * r * r; }
+    }
+
+Generics
+Generics let collections and classes work with a chosen type and catch type errors at compile time.
+
+    List<String> names = new ArrayList<>();
+    Map<String, Integer> ages = new HashMap<>();
+
+Collections
+ArrayList is a resizable array with fast index access. LinkedList suits frequent inserts at the ends. HashMap maps keys to values with average constant-time lookups. Use HashSet when you only need unique items.
+
+Exceptions
+Checked exceptions must be caught or declared with throws. Unchecked exceptions, such as RuntimeException, don't have to be. try-with-resources closes a resource automatically.
+
+    try (BufferedReader reader = new BufferedReader(new FileReader("data.txt"))) {
+        System.out.println(reader.readLine());
+    } catch (IOException e) {
+        System.err.println("Could not read file: " + e.getMessage());
+    }
+
+Records and Optional
+A record is a short way to write an immutable data class. Optional represents a value that may be missing, which helps avoid NullPointerException.
+
+    record Point(int x, int y) {}
+
+    Optional<String> name = findName(id);
+    String shown = name.orElse("unknown");
+
+Streams
+Streams process collections in a pipeline. They read more clearly than loops for filtering and transforming data.
+
+    List<String> longNames = names.stream()
+        .filter(n -> n.length() > 5)
+        .map(String::toUpperCase)
+        .toList();
+
+equals and hashCode
+If you override equals, also override hashCode, or objects that are equal may behave differently in HashMap and HashSet.
+
+Concurrency
+Threads run code in parallel. ExecutorService manages a pool of threads so you don't create them by hand. Shared mutable data needs synchronization or thread-safe classes, or results become unpredictable.
+
+Common pitfalls
+Comparing strings with == checks object identity, not contents. Use equals.
+Calling a method on a null reference throws NullPointerException. Check for null or use Optional.
+Modifying a list while looping over it with a for-each loop throws ConcurrentModificationException.
